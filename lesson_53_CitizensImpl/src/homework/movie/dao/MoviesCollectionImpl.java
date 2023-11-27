@@ -85,7 +85,14 @@ public class MoviesCollectionImpl implements MoviesCollection {
 
     @Override
     public Iterable<Movie> findMoviesCreatedBetweenDates(LocalDate from, LocalDate to){
-        return null;
+        List<Movie> foundBetweenDates = new ArrayList<>();
+        for (Movie m : moviesList) {
+            LocalDate movieDate = m.getDate();
+            if (movieDate.isAfter(from) && movieDate.isBefore(to) || movieDate.isEqual(from) || movieDate.isEqual(to)) {
+                foundBetweenDates.add(m);
+            }
+        }
+        return foundBetweenDates;
     }
 
 
