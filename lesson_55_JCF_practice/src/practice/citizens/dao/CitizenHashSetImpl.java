@@ -5,6 +5,7 @@ import practice.citizens.model.Person;
 import java.util.*;
 
 public class CitizenHashSetImpl implements Citizens {
+
     private HashSet<Person> citizens;
     //comparators for sorting
     private static Comparator<Person> lastNameComparator = Comparator.comparing(Person::getLastName).thenComparingInt(Person::getId);
