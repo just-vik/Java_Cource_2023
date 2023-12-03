@@ -26,7 +26,10 @@ public class CitizenHashSetImpl implements Citizens {
 
     //addition
     @Override
-    public boolean add(Person person) { //is a check needed? (==null)
+    public boolean add(Person person) {
+        if (person == null){
+            return false;
+        }
         return citizens.add(person);
     }
 

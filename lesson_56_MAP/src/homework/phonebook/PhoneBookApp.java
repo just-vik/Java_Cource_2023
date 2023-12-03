@@ -1,2 +1,5 @@
-package homework.phonebook;public class PhoneBookApp {
+package homework.phonebook;
+
+public class PhoneBookApp {
+
 }

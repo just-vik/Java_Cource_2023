@@ -6,7 +6,7 @@ import homework.company_v3.model.SalesManager;
 import java.util.Comparator;
 import java.util.TreeSet;
 
-public class CompanySetImpl implements Company{
+public class CompanySetImpl implements Company {
     private TreeSet<Employee> employees;
 
     public CompanySetImpl(int i) {
@@ -15,10 +15,7 @@ public class CompanySetImpl implements Company{
 
     @Override
     public boolean addEmployee(Employee employee) {
-        if (employee == null) {
-            return false;
-        }
-        return employees.add(employee);
+        return employee != null && employees.add(employee);
     }
 
     @Override

@@ -17,15 +17,16 @@ public class MoviesCollectionImpl implements MoviesCollection {
     }
 
     //конструктор для moviesList заполняемый списком фильмов
-    public MoviesCollectionImpl(List<Movie> movies){
+    public MoviesCollectionImpl(List<Movie> movies) {
         this(); //вызов пустого конструктора для списка
         for (Movie m : movies) {
-            moviesList.add(m); //добавление каждого фильма из списка в moviesList
+            //moviesList.add(m); //это метод от ArrayList, он не отсекает дубликаты на этапе создания.
+            addMovie(m); //вызов метода из класса
         }
     }
 
     @Override
-    public boolean addMovie(Movie movie){
+    public boolean addMovie(Movie movie) {
         if (movie == null) {
             return false;
         }
@@ -40,7 +41,7 @@ public class MoviesCollectionImpl implements MoviesCollection {
     }
 
     @Override
-    public Movie removeMovie(long imdb){
+    public Movie removeMovie(long imdb) {
         Movie victim = findById(imdb); //поиск фильма по imdb
         if (victim != null) {
             moviesList.remove(victim); //удаление фильма из списка
@@ -50,9 +51,9 @@ public class MoviesCollectionImpl implements MoviesCollection {
     }
 
     @Override
-    public Movie findById(long imdb){
+    public Movie findById(long imdb) {
         for (Movie m : moviesList) {
-            if(m.getImdb() == imdb) {
+            if (m.getImdb() == imdb) {
                 return m; //возвращает фильм, если он найден по imdb
             }
         }
@@ -60,10 +61,10 @@ public class MoviesCollectionImpl implements MoviesCollection {
     }
 
     @Override
-    public Iterable<Movie> findByGenre(String genre){
+    public Iterable<Movie> findByGenre(String genre) {
         List<Movie> foundByGenre = new ArrayList<>();
         for (Movie m : moviesList) {
-            if(m.getGenre().equals(genre)) {
+            if (m.getGenre().equals(genre)) {
                 moviesList.add(m);
             }
         }
@@ -72,10 +73,10 @@ public class MoviesCollectionImpl implements MoviesCollection {
 
     // Находит фильмы определенного режиссера
     @Override
-    public Iterable<Movie> findByDirector(String director){
+    public Iterable<Movie> findByDirector(String director) {
         List<Movie> foundByDirector = new ArrayList<>();
         for (Movie m : moviesList) {
-            if(m.getDirector().equals(director)) {
+            if (m.getDirector().equals(director)) {
                 moviesList.add(m);
             }
         }
@@ -84,7 +85,7 @@ public class MoviesCollectionImpl implements MoviesCollection {
 
 
     @Override
-    public Iterable<Movie> findMoviesCreatedBetweenDates(LocalDate from, LocalDate to){
+    public Iterable<Movie> findMoviesCreatedBetweenDates(LocalDate from, LocalDate to) {
         List<Movie> foundBetweenDates = new ArrayList<>();
         for (Movie m : moviesList) {
             LocalDate movieDate = m.getDate();
@@ -97,7 +98,7 @@ public class MoviesCollectionImpl implements MoviesCollection {
 
 
     @Override
-    public int totalQuantity(){
+    public int totalQuantity() {
         return moviesList.size();
     }
 

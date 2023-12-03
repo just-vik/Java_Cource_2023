@@ -32,6 +32,17 @@ class MoviesCollectionImplTest {
     }
 
     @Test
+    void testConstructor(){
+        // вызываем конструктор с двумя одинаковыми объектами
+        moviesCollection = new MoviesCollectionImpl(List.of(
+                new Movie(1, "T1","G1", "D1", now.minusYears(2)),
+                new Movie(1, "T1","G1", "D1", now.minusYears(2))
+        ));
+        // проверяем, что добавился только один объект
+        assertEquals(1,moviesCollection.totalQuantity());
+    }
+
+    @Test
     void addMovie() {
         assertFalse(moviesCollection.addMovie(null));
         assertFalse(moviesCollection.addMovie(new Movie(2, "B", "B", "B", now.minusYears(4))));
