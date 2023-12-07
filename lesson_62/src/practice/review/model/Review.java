@@ -1,30 +1,32 @@
 package practice.review.model;
 
-
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicLong;
 
-public class Review implements Comparable<Review> {
-    //field
-    long id;
-    int rating;
-    String comment;
-    String author;
-    String product;
-    int liked;
-    LocalDateTime data;
+public class Review {
+    private final long id;
+    private int rating;
+    private String author;
+    private String comment;
+    private String product;
+    private int likes;
+    private final LocalDateTime date;
 
-    //constructor
-
-    public Review(int rating, String comment, String author, String product, int liked) {
+    private static final AtomicLong idGenerator = new AtomicLong(System.currentTimeMillis());
+    //создаем переменную idGenerator типа AtomicLong(генерация уникальных id)
+    //и переводим значением текущего времени в миллисекунды.
+    public Review(int rating, String comment, String author, String product) {
+        this.id = idGenerator.incrementAndGet();
         this.rating = rating;
         this.comment = comment;
         this.author = author;
         this.product = product;
-        this.liked = liked;
+        this.likes = (int) (Math.random() * 41) + 10;//Math.random() - генерируем случайные числа лайков от 10 до 50
+        this.date = LocalDateTime.now(); //присваиваем полю date значения текущей даты и времени (LocalDateTime.now())
     }
 
-
+    // Getters and setters
     public long getId() {
         return id;
     }
@@ -33,40 +35,52 @@ public class Review implements Comparable<Review> {
         return rating;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
     public String getAuthor() {
         return author;
+    }
+
+    public String getComment() {
+        return comment;
     }
 
     public String getProduct() {
         return product;
     }
 
-    public int getLiked() {
-        return liked;
+    public int getLikes() {
+        return likes;
     }
 
-    public LocalDateTime getData() {
-        return data;
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public boolean setRating(int rating) {
+        if (rating >= 1 && rating <= 5) {
+            this.rating = rating;
+            return true;
+        }
+        return false;
     }
 
     public void setComment(String comment) {
         this.comment = comment;
     }
 
+//    public int addLike() {
+//        return ++likes;
+//    }  //нужен ли данный метод???
+
     @Override
     public String toString() {
-        return "Review { " +
-                "id = " + id +
-                ", rating = " + rating +
-                ", comment = '" + comment + '\'' +
-                ", author = '" + author + '\'' +
-                ", product = '" + product + '\'' +
-                ", liked = " + liked +
-                ", data = " + data +
+        return "Review{" +
+                "id=" + id +
+                ", rating=" + rating +
+                ", author='" + author + '\'' +
+                ", comment='" + comment + '\'' +
+                ", product='" + product + '\'' +
+                ", likes=" + likes +
+                ", date=" + date +
                 '}';
     }
 
@@ -82,19 +96,4 @@ public class Review implements Comparable<Review> {
     public int hashCode() {
         return Objects.hash(id);
     }
-
-    public static int addLike(int like) {
-        return like++;
-    }
-
-    @Override
-    public int compareTo(Review o) {
-        return this.data.compareTo(o.data);
-    }
-
-    public boolean setRating(int newRating) {
-        this.rating = newRating;
-        return false;
-    }
 }
-
